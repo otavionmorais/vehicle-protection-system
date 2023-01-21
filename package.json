@@ -15,7 +15,11 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "jsonwebtoken": "^9.0.0"
+    "class-transformer": "^0.5.1",
+    "jsonwebtoken": "^9.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.0",
+    "tsyringe": "^4.7.0"
   },
   "devDependencies": {
     "@types/jest": "29.2.4",
@@ -48,6 +52,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/../jest.setup.ts"
+    ]
   }
 }
