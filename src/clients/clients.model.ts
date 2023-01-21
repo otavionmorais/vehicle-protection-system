@@ -1,3 +1,5 @@
+import { Exclude } from 'class-transformer';
+
 export class Client {
   id: string;
 
@@ -11,6 +13,7 @@ export class Client {
 
   birth_date: Date;
 
+  @Exclude()
   password: string;
 
   created_at: Date;
