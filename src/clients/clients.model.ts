@@ -19,4 +19,10 @@ export class Client {
   created_at: Date;
 
   updated_at: Date;
+
+  build<K extends keyof Omit<Client, 'build'>>(
+    items: Record<K, Client[K]>,
+  ): Client {
+    return Object.assign(this, items);
+  }
 }
