@@ -7,17 +7,19 @@
   "scripts": {
     "build": "npx tsc",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "npx ts-node src/index",
+    "start": "nodemon src/index.ts",
     "start:prod": "node dist/index",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest",
     "test:cov": "jest --coverage"
   },
   "dependencies": {
+    "@hapi/hapi": "^21.2.0",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
+    "dotenv": "^16.0.3",
+    "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
-    "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tsyringe": "^4.7.0"
   },
@@ -30,7 +32,9 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "29.3.1",
+    "nodemon": "^2.0.20",
     "prettier": "^2.3.2",
+    "reflect-metadata": "^0.1.13",
     "ts-jest": "29.0.3",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
