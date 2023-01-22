@@ -1,8 +1,9 @@
 import { instanceToInstance } from 'class-transformer';
-import { injectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 import { Client } from './clients.model';
 import { ClientsRepository } from './clients.repository';
 import {
+  IClientsRepository,
   IClientsService,
   ICreateClientDTO,
   IFindClientDTO,
@@ -10,7 +11,10 @@ import {
 
 @injectable()
 export class ClientsService implements IClientsService {
-  constructor(private clientsRepository: ClientsRepository) {}
+  constructor(
+    @inject(ClientsRepository)
+    private clientsRepository: IClientsRepository,
+  ) {}
 
   async create(data: ICreateClientDTO): Promise<Client> {
     return instanceToInstance(this.clientsRepository.create(data));

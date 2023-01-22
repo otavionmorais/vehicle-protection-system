@@ -15,6 +15,10 @@ export interface IFindClientDTO {
   email?: string;
 }
 
+export interface IClientsController {
+  create(data: ICreateClientDTO): Promise<Client>;
+}
+
 export interface IClientsService {
   create(data: ICreateClientDTO): Promise<Client>;
   update(id: string, data: Partial<ICreateClientDTO>): Promise<Client>;
