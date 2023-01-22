@@ -11,6 +11,6 @@ export async function treatRequest(fn: Promise<unknown>, res: ResponseToolkit) {
         error: err.message,
         message: err.message,
       })
-      .code(500);
+      .code(err.code || 500);
   }
 }
