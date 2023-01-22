@@ -1,5 +1,6 @@
 import { instanceToInstance } from 'class-transformer';
 import { injectable, inject } from 'tsyringe';
+import { hash } from 'bcrypt';
 import { Client } from './clients.model';
 import { ClientsRepository } from './clients.repository';
 import {
@@ -17,7 +18,13 @@ export class ClientsService implements IClientsService {
   ) {}
 
   async create(data: ICreateClientDTO): Promise<Client> {
-    return instanceToInstance(this.clientsRepository.create(data));
+    const hashedPassword = await hash(data.password, 12);
+
+    const result = await this.clientsRepository.create({
+      ...data,
+      password: hashedPassword,
+    });
+    return instanceToInstance(result);
   }
 
   update(id: string, data: Partial<ICreateClientDTO>): Promise<Client> {
