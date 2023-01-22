@@ -7,7 +7,7 @@ export const clientMock = new Client().build({
   name: 'Mocked Name',
   email: 'mockedmail@mailprovider.com',
   phone: '+5511999999999',
-  birth_date: new Date('1990-01-01'),
+  birth_date: '1990-01-01',
   password: 'thisIsAHashedPassword',
   created_at: new Date('2020-01-01'),
   updated_at: new Date('2020-01-01'),
@@ -23,6 +23,6 @@ export const createClientDTOMock: ICreateClientDTO = {
   name: 'Mocked Name',
   email: 'mockedmail@mailprovider.com',
   phone: '+5511999999999',
-  birth_date: new Date('1990-01-01'),
+  birth_date: '1990-01-01',
   password: 'batata',
 };

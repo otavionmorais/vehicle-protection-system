@@ -5,7 +5,7 @@ export interface ICreateClientDTO {
   name: string;
   email: string;
   phone: string;
-  birth_date: Date;
+  birth_date: string;
   password: string;
 }
 
