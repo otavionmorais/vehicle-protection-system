@@ -9,6 +9,9 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nodemon src/index.ts",
     "start:prod": "node dist/index",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "migrations:run": "dotenv -- bash -c 'npm run typeorm migration:run -- -d $(if [ \"$NODE_ENV\" = \"production\" ]; then echo \"dist/src/database/index.js\"; else echo \"src/database/index.ts\"; fi)'",
+    "migrations:revert": "dotenv -- bash -c 'npm run typeorm migration:revert -- -d $(if [ \"$NODE_ENV\" = \"production\" ]; then echo \"dist/src/database/index.js\"; else echo \"src/database/index.ts\"; fi)'",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest",
     "test:cov": "jest --coverage"
@@ -17,13 +20,18 @@
     "@hapi/hapi": "^21.2.0",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
+    "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
+    "dotenv-cli": "^7.0.0",
     "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
+    "pg": "^8.8.0",
     "rxjs": "^7.8.0",
-    "tsyringe": "^4.7.0"
+    "tsyringe": "^4.7.0",
+    "typeorm": "^0.3.11"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "29.2.4",
     "@types/node": "18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
