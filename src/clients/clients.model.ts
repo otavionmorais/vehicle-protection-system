@@ -2,6 +2,7 @@ import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -26,18 +27,21 @@ export class Client {
   @Column()
   phone: string;
 
-  @Column()
-  birth_date: string;
+  @Column({ name: 'birth_date' })
+  birthDate: string;
 
   @Exclude()
   @Column()
   password: string;
 
-  @CreateDateColumn({ type: 'timestamp without time zone' })
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp without time zone' })
+  createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp without time zone' })
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp without time zone' })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp without time zone' })
+  deletedAt: Date;
 
   build<K extends keyof Omit<Client, 'build'>>(
     items: Record<K, Client[K]>,
