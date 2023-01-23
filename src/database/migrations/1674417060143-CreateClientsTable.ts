@@ -57,6 +57,11 @@ export class CreateClientsTable1674417060143 implements MigrationInterface {
             default: 'now()',
             isNullable: false,
           }),
+          new TableColumn({
+            name: 'deleted_at',
+            type: 'timestamp without time zone',
+            isNullable: true,
+          }),
         ],
       }),
     );
