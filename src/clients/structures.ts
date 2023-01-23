@@ -4,9 +4,9 @@ import { Client } from './clients.model';
 export interface ICreateClientDTO {
   document: string;
   name: string;
-  email: string;
-  phone: string;
-  birthDate: string;
+  email?: string;
+  phone?: string;
+  birthDate?: string;
   password: string;
 }
 

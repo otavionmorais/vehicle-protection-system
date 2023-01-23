@@ -22,13 +22,13 @@ export class Client {
   name: string;
 
   @Column()
-  email: string;
+  email?: string;
 
   @Column()
-  phone: string;
+  phone?: string;
 
   @Column({ name: 'birth_date' })
-  birthDate: string;
+  birthDate?: string;
 
   @Exclude()
   @Column()
@@ -41,10 +41,10 @@ export class Client {
   updatedAt: Date;
 
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp without time zone' })
-  deletedAt: Date;
+  deletedAt?: Date;
 
   build<K extends keyof Omit<Client, 'build'>>(
-    items: Record<K, Client[K]>,
+    items: Partial<Record<K, Client[K]>>,
   ): Client {
     return Object.assign(this, items);
   }
