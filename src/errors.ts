@@ -6,6 +6,7 @@ export enum ErrorIdentifier {
   CLIENT_NOT_FOUND = 'CL.001',
   CLIENT_ALREADY_EXISTS = 'CL.002',
   CLIENT_INVALID_PASSWORD = 'CL.003',
+  THIRD_PARTY_PERSON_NOT_FOUND = 'TPP.001',
 }
 
 export class CustomError extends Error {
