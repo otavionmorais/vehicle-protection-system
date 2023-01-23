@@ -41,7 +41,7 @@ export function configureClientRoutes(server: Hapi.Server) {
       handleRequest(clientsController.findOne(req.params.id), res),
     options: {
       validate: {
-        params: Joi.object({
+        params: Joi.object<{ id: string }>({
           id: Joi.string().uuid().required(),
         }),
         failAction: validationError,
@@ -110,10 +110,8 @@ export function configureClientRoutes(server: Hapi.Server) {
   server.route({
     method: 'DELETE',
     path: '/clients/{id}',
-    handler: (req, res) => {
-      const { id } = req.params as { id: string };
-      return handleRequest(clientsController.delete(id), res);
-    },
+    handler: (req, res) =>
+      handleRequest(clientsController.delete(req.params.id), res),
     options: {
       validate: {
         params: Joi.object<{ id: string }, true>({
