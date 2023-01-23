@@ -1,8 +1,10 @@
+import { Accident } from '../accidents/accidents.model';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -37,6 +39,9 @@ export class ThirdPartyPerson {
 
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp without time zone' })
   deletedAt: Date;
+
+  @ManyToMany(() => Accident)
+  accidents: Accident[];
 
   build<K extends keyof Omit<ThirdPartyPerson, 'build'>>(
     items: Record<K, ThirdPartyPerson[K]>,
