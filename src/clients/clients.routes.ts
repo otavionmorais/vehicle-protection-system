@@ -38,7 +38,7 @@ export function configureClientRoutes(server: Hapi.Server) {
     method: 'GET',
     path: '/clients/{id}',
     handler: (req, res) =>
-      handleRequest(clientsController.findOne(req.params.id), res),
+      handleRequest(clientsController.findById(req.params.id), res),
     options: {
       validate: {
         params: Joi.object<{ id: string }>({

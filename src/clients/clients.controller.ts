@@ -21,7 +21,7 @@ export class ClientsController implements IClientsController {
     return this.clientsService.findMany(filters);
   }
 
-  findOne(id: string): Promise<Client> {
+  findById(id: string): Promise<Client> {
     return this.clientsService.findById(id);
   }
 
