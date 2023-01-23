@@ -28,6 +28,10 @@ export interface IFindManyClientsDTO {
 
 export interface IClientsController {
   create(data: ICreateClientDTO): Promise<Client>;
+  update(id: string, data: Partial<ICreateClientDTO>): Promise<Client>;
+  delete(id: string): Promise<void>;
+  findById(id: string): Promise<Client>;
+  findMany(filters: IFindManyClientsDTO): Promise<IPaginatedList<Client>>;
 }
 
 export interface IClientsService {
