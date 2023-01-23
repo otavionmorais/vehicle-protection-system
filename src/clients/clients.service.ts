@@ -7,8 +7,10 @@ import {
   IClientsRepository,
   IClientsService,
   ICreateClientDTO,
-  IFindClientDTO,
+  IFindManyClientsDTO,
+  IUpdateClientDTO,
 } from './structures';
+import { IPaginatedList } from 'src/structures';
 
 @injectable()
 export class ClientsService implements IClientsService {
@@ -27,19 +29,29 @@ export class ClientsService implements IClientsService {
     return instanceToInstance(result);
   }
 
-  update(id: string, data: Partial<ICreateClientDTO>): Promise<Client> {
-    return instanceToInstance(this.clientsRepository.update(id, data));
+  async update(id: string, data: IUpdateClientDTO): Promise<Client> {
+    let hashedPassword: string | undefined;
+
+    if (data.password) {
+      hashedPassword = await hash(data.password, 12);
+    }
+
+    const result = await this.clientsRepository.update(id, {
+      ...data,
+      ...(hashedPassword && { password: hashedPassword }),
+    });
+    return instanceToInstance(result);
   }
 
   delete(id: string): Promise<void> {
-    return instanceToInstance(this.clientsRepository.delete(id));
+    return this.clientsRepository.delete(id);
   }
 
-  find(filters: IFindClientDTO): Promise<Client> {
-    return instanceToInstance(this.clientsRepository.find(filters));
+  findById(id: string): Promise<Client> {
+    return instanceToInstance(this.clientsRepository.findById(id));
   }
 
-  async authenticate(email: string, password: string): Promise<Client> {
-    throw new Error('Method not implemented.');
+  findMany(filters: IFindManyClientsDTO): Promise<IPaginatedList<Client>> {
+    return instanceToInstance(this.clientsRepository.findMany(filters));
   }
 }
