@@ -1,6 +1,11 @@
+import { Client } from './clients.model';
 import { ClientsRepository } from './clients.repository';
 import { ClientsService } from './clients.service';
-import { createClientDTOMock, clientMock } from './mocks/index';
+import {
+  createClientDTOMock,
+  clientMock,
+  clientPaginatedListMock,
+} from './mocks/index';
 
 describe('ClientsService', () => {
   const clientsRepository = new ClientsRepository();
@@ -19,9 +24,10 @@ describe('ClientsService', () => {
     expect(client).toHaveProperty('name', clientMock.name);
     expect(client).toHaveProperty('email', clientMock.email);
     expect(client).toHaveProperty('phone', clientMock.phone);
-    expect(client).toHaveProperty('birth_date', clientMock.birth_date);
-    expect(client).toHaveProperty('created_at', clientMock.created_at);
-    expect(client).toHaveProperty('updated_at', clientMock.updated_at);
+    expect(client).toHaveProperty('birthDate', clientMock.birthDate);
+    expect(client).toHaveProperty('createdAt', clientMock.createdAt);
+    expect(client).toHaveProperty('updatedAt', clientMock.updatedAt);
+    expect(client).toHaveProperty('deletedAt', null);
     expect(client).toHaveProperty('password', undefined);
   });
 
@@ -44,9 +50,10 @@ describe('ClientsService', () => {
     expect(client).toHaveProperty('name', updatedName);
     expect(client).toHaveProperty('email', clientMock.email);
     expect(client).toHaveProperty('phone', clientMock.phone);
-    expect(client).toHaveProperty('birth_date', clientMock.birth_date);
-    expect(client).toHaveProperty('created_at', clientMock.created_at);
-    expect(client).toHaveProperty('updated_at', clientMock.updated_at);
+    expect(client).toHaveProperty('birthDate', clientMock.birthDate);
+    expect(client).toHaveProperty('createdAt', clientMock.createdAt);
+    expect(client).toHaveProperty('updatedAt', clientMock.updatedAt);
+    expect(client).toHaveProperty('deletedAt', null);
     expect(client).toHaveProperty('password', undefined);
   });
 
@@ -61,11 +68,11 @@ describe('ClientsService', () => {
   });
 
   it('should find a client', async () => {
-    expect(clientsService.find).toBeDefined();
+    expect(clientsService.findById).toBeDefined();
 
-    jest.spyOn(clientsRepository, 'find').mockResolvedValue(clientMock);
+    jest.spyOn(clientsRepository, 'findById').mockResolvedValue(clientMock);
 
-    const client = await clientsService.find({ id: clientMock.id });
+    const client = await clientsService.findById(clientMock.id);
 
     expect(client).toBeDefined();
     expect(client).toHaveProperty('id', clientMock.id);
@@ -73,9 +80,28 @@ describe('ClientsService', () => {
     expect(client).toHaveProperty('name', clientMock.name);
     expect(client).toHaveProperty('email', clientMock.email);
     expect(client).toHaveProperty('phone', clientMock.phone);
-    expect(client).toHaveProperty('birth_date', clientMock.birth_date);
-    expect(client).toHaveProperty('created_at', clientMock.created_at);
-    expect(client).toHaveProperty('updated_at', clientMock.updated_at);
+    expect(client).toHaveProperty('birthDate', clientMock.birthDate);
+    expect(client).toHaveProperty('createdAt', clientMock.createdAt);
+    expect(client).toHaveProperty('updatedAt', clientMock.updatedAt);
+    expect(client).toHaveProperty('deletedAt', null);
     expect(client).toHaveProperty('password', undefined);
+  });
+
+  it('should find multiple clients', async () => {
+    expect(clientsService.findById).toBeDefined();
+
+    jest
+      .spyOn(clientsRepository, 'findMany')
+      .mockResolvedValue(clientPaginatedListMock);
+
+    const paginatedResponse = await clientsService.findMany({});
+
+    expect(paginatedResponse).toBeDefined();
+    expect(paginatedResponse).toHaveProperty('items');
+    expect(paginatedResponse).toHaveProperty('totalItems');
+    expect(paginatedResponse).toHaveProperty('page');
+    expect(paginatedResponse).toHaveProperty('itemsPerPage');
+    expect(paginatedResponse.items?.[0]).toBeDefined();
+    expect(paginatedResponse.items[0]).toBeInstanceOf(Client);
   });
 });

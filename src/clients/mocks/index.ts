@@ -1,3 +1,4 @@
+import { IPaginatedList } from 'src/structures';
 import { Client } from '../clients.model';
 import { ICreateClientDTO } from '../structures';
 
@@ -7,11 +8,19 @@ export const clientMock = new Client().build({
   name: 'Mocked Name',
   email: 'mockedmail@mailprovider.com',
   phone: '+5511999999999',
-  birth_date: '1990-01-01',
+  birthDate: '1990-01-01',
   password: 'thisIsAHashedPassword',
-  created_at: new Date('2020-01-01'),
-  updated_at: new Date('2020-01-01'),
+  createdAt: new Date('2020-01-01'),
+  updatedAt: new Date('2020-01-01'),
+  deletedAt: null,
 });
+
+export const clientPaginatedListMock: IPaginatedList<Client> = {
+  page: 0,
+  itemsPerPage: 20,
+  totalItems: 1,
+  items: [clientMock],
+};
 
 export const updatedClientMock = new Client().build({
   ...clientMock,
@@ -23,6 +32,6 @@ export const createClientDTOMock: ICreateClientDTO = {
   name: 'Mocked Name',
   email: 'mockedmail@mailprovider.com',
   phone: '+5511999999999',
-  birth_date: '1990-01-01',
+  birthDate: '1990-01-01',
   password: 'batata',
 };
