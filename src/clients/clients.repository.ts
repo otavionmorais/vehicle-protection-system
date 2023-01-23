@@ -2,10 +2,13 @@ import { Client } from './clients.model';
 import {
   IClientsRepository,
   ICreateClientDTO,
-  IFindClientDTO,
+  IFindManyClientsDTO,
+  IUpdateClientDTO,
 } from './structures';
 import { dataSource } from '../database';
 import { CustomError, ErrorIdentifier } from '../errors';
+import { handleDatabaseError } from '../utils';
+import { IPaginatedList } from 'src/structures';
 
 export class ClientsRepository implements IClientsRepository {
   private repository = dataSource.getRepository(Client);
@@ -17,24 +20,98 @@ export class ClientsRepository implements IClientsRepository {
 
       return savedRegister;
     } catch (error) {
-      console.error('Database error: ', error);
-      throw new CustomError(
-        'An unexpected error occurred. Try again later.',
-        ErrorIdentifier.INTERNAL_SERVER_ERROR,
-        500,
-      );
+      handleDatabaseError(error);
     }
   }
 
-  async update(id: string, data: Partial<ICreateClientDTO>): Promise<Client> {
-    throw new Error('Method not implemented.');
+  async update(id: string, data: IUpdateClientDTO): Promise<Client> {
+    try {
+      const savedRegister = await this.repository
+        .createQueryBuilder()
+        .update()
+        .set(data)
+        .where('id = :id', { id })
+        .returning('*')
+        .execute();
+
+      if (!savedRegister.raw[0]) {
+        throw new CustomError(
+          'Client not found.',
+          ErrorIdentifier.CLIENT_NOT_FOUND,
+          404,
+        );
+      }
+
+      return new Client().build(savedRegister.raw[0]);
+    } catch (error) {
+      handleDatabaseError(error);
+    }
   }
 
   async delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    try {
+      const deletedRegister = await this.repository
+        .createQueryBuilder()
+        .softDelete()
+        .where('id = :id', { id })
+        .execute();
+
+      if (!deletedRegister.affected) {
+        throw new CustomError(
+          'Client not found.',
+          ErrorIdentifier.CLIENT_NOT_FOUND,
+          404,
+        );
+      }
+    } catch (error) {
+      handleDatabaseError(error);
+    }
   }
 
-  async find(id: IFindClientDTO): Promise<Client> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Client> {
+    try {
+      const register = await this.repository.findOne({
+        where: { id },
+      });
+
+      if (!register) {
+        throw new CustomError(
+          'Client not found.',
+          ErrorIdentifier.CLIENT_NOT_FOUND,
+          404,
+        );
+      }
+
+      return register;
+    } catch (error) {
+      handleDatabaseError(error);
+    }
+  }
+
+  async findMany({
+    page = 0,
+    itemsPerPage = 20,
+    deleted,
+  }: IFindManyClientsDTO): Promise<IPaginatedList<Client>> {
+    try {
+      const totalCount = await this.repository.count({
+        withDeleted: !!deleted,
+      });
+
+      const registers = await this.repository.find({
+        skip: page * itemsPerPage,
+        take: itemsPerPage,
+        withDeleted: !!deleted,
+      });
+
+      return {
+        page: page,
+        itemsPerPage: itemsPerPage,
+        totalItems: totalCount,
+        items: registers,
+      };
+    } catch (error) {
+      handleDatabaseError(error);
+    }
   }
 }
