@@ -1,9 +1,11 @@
 import { Exclude } from 'class-transformer';
+import { Accident } from '../accidents/accidents.model';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -42,6 +44,9 @@ export class Client {
 
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp without time zone' })
   deletedAt?: Date;
+
+  @OneToMany(() => Accident, (accident) => accident.client)
+  accidents: Accident[];
 
   build<K extends keyof Omit<Client, 'build'>>(
     items: Partial<Record<K, Client[K]>>,
