@@ -88,6 +88,18 @@ export class ClientsRepository implements IClientsRepository {
     }
   }
 
+  async findByDocument(document: string): Promise<Client> {
+    try {
+      const register = await this.repository.findOne({
+        where: { document },
+      });
+
+      return register;
+    } catch (error) {
+      handleDatabaseError(error);
+    }
+  }
+
   async findMany({
     page = 0,
     itemsPerPage = 20,

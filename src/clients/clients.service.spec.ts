@@ -14,6 +14,9 @@ describe('ClientsService', () => {
   it('should create a client', async () => {
     expect(clientsService.create).toBeDefined();
 
+    jest
+      .spyOn(clientsRepository, 'findByDocument')
+      .mockResolvedValue(undefined);
     jest.spyOn(clientsRepository, 'create').mockResolvedValue(clientMock);
 
     const client = await clientsService.create(createClientDTOMock);
