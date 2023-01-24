@@ -4,7 +4,7 @@ Service to register clients, accidents and affected third parties.
 
 ## Endpoints documentation
 
-You can find the endpoints documentation [here](https://documenter.getpostman.com/view/10600065/Tz5qZQ9o).
+You can find the endpoints documentation [here](https://documenter.getpostman.com/view/9736763/2s8ZDcxJcP).
 
 <br>
 
