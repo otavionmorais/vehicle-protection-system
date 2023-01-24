@@ -48,6 +48,12 @@ That's it! The project will be running on `localhost:${PORT}`.
 npm run typeorm migration:create src/database/migrations/{migrationName}
 ```
 
+### Reverting migrations:
+
+```sh
+npm run migrations:revert
+```
+
 ### Running tests:
 
 ```sh
