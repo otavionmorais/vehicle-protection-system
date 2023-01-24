@@ -47,5 +47,6 @@ export interface IClientsRepository {
   update(id: string, data: Partial<ICreateClientDTO>): Promise<Client>;
   delete(id: string): Promise<void>;
   findById(id: string): Promise<Client>;
+  findByDocument(document: string): Promise<Client>;
   findMany(filters: IFindManyClientsDTO): Promise<IPaginatedList<Client>>;
 }
