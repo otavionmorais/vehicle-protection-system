@@ -10,7 +10,8 @@ import {
   IFindManyClientsDTO,
   IUpdateClientDTO,
 } from './structures';
-import { IPaginatedList } from 'src/structures';
+import { IPaginatedList } from '../structures';
+import { CustomError, ErrorIdentifier } from '../errors';
 
 @injectable()
 export class ClientsService implements IClientsService {
@@ -20,6 +21,18 @@ export class ClientsService implements IClientsService {
   ) {}
 
   async create(data: ICreateClientDTO): Promise<Client> {
+    const existsWithSameDocument = await this.clientsRepository.findByDocument(
+      data.document,
+    );
+
+    if (existsWithSameDocument) {
+      throw new CustomError(
+        'There is already a client with this document.',
+        ErrorIdentifier.CLIENT_ALREADY_EXISTS,
+        409,
+      );
+    }
+
     const hashedPassword = await hash(data.password, 12);
 
     const result = await this.clientsRepository.create({
