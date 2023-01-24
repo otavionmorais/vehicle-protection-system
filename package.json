@@ -10,7 +10,7 @@
     "start": "nodemon src/index.ts",
     "start:prod": "node dist/src/index",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "migrations:run": "dotenv -- bash -c 'npm run typeorm migration:run -- -d $(if [ \"$NODE_ENV\" = \"production\" ]; then echo \"dist/src/database/index.js\"; else echo \"src/database/index.ts\"; fi)'",
+    "migrations:execute": "dotenv -- bash -c 'npm run typeorm migration:run -- -d $(if [ \"$NODE_ENV\" = \"production\" ]; then echo \"dist/src/database/index.js\"; else echo \"src/database/index.ts\"; fi)'",
     "migrations:revert": "dotenv -- bash -c 'npm run typeorm migration:revert -- -d $(if [ \"$NODE_ENV\" = \"production\" ]; then echo \"dist/src/database/index.js\"; else echo \"src/database/index.ts\"; fi)'",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest",
