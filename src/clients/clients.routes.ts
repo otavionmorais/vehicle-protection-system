@@ -61,7 +61,7 @@ export function configureClientRoutes(server: Hapi.Server) {
     options: {
       validate: {
         payload: Joi.object<ICreateClientDTO, true>({
-          document: Joi.string().required(),
+          document: Joi.string().pattern(/^\d*$/).required(),
           name: Joi.string().required(),
           email: Joi.string().email(),
           phone: Joi.string().pattern(/^\+?[1-9][0-9]{7,14}$/),
