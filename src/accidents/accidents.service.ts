@@ -18,11 +18,11 @@ export class AccidentsService implements IAccidentsService {
     private accidentsRepository: IAccidentsRepository,
   ) {}
 
-  async create(data: ICreateAccidentDTO): Promise<Accident> {
+  create(data: ICreateAccidentDTO): Promise<Accident> {
     return instanceToInstance(this.accidentsRepository.create(data));
   }
 
-  async update(id: string, data: IUpdateAccidentDTO): Promise<Accident> {
+  update(id: string, data: IUpdateAccidentDTO): Promise<Accident> {
     return instanceToInstance(this.accidentsRepository.update(id, data));
   }
 
