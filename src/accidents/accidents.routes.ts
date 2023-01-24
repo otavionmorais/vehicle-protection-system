@@ -71,10 +71,8 @@ export function configureAccidentRoutes(server: Hapi.Server) {
             Joi.object<ICreateThirdPartyPersonDTO, true>({
               document: Joi.string().required(),
               name: Joi.string().required(),
-              email: Joi.string().email().required(),
-              phone: Joi.string()
-                .pattern(/^\+?[1-9][0-9]{7,14}$/)
-                .required(),
+              email: Joi.string().email(),
+              phone: Joi.string().pattern(/^\+?[1-9][0-9]{7,14}$/),
               birthDate: Joi.string().custom(joiDateWithoutTimeValidation),
             }),
           ),
